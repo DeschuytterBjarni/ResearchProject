@@ -1,40 +1,9 @@
 <div class="flex flex-col">
-    <div class="flex flex-col lg:flex-row">
-        <aside class="hidden lg:block border-r bg-gray-100/40 dark:bg-gray-800/40">
-            <div class="flex flex-col gap-4 items-start py-2 px-4">
-                <h2 class="text-lg font-bold">Categories</h2>
-                <a class="font-semibold" href="#">
-                    Electronics
-                </a>
-                <a class="font-semibold" href="#">
-                    Fashion
-                </a>
-                <a class="font-semibold" href="#">
-                    Home &amp; Kitchen
-                </a>
-                <a class="font-semibold" href="#">
-                    Books
-                </a>
-                <a class="font-semibold" href="#">
-                    Toys &amp; Games
-                </a>
-                <a class="font-semibold" href="#">
-                    Beauty &amp; Personal Care
-                </a>
-                <a class="font-semibold" href="#">
-                    Sports &amp; Outdoors
-                </a>
-                <a class="font-semibold" href="#">
-                    Automotive
-                </a>
-                <a class="font-semibold" href="#">
-                    Grocery &amp; Gourmet Food
-                </a>
-            </div>
-        </aside>
+    <div class="flex flex-col lg:flex-row min-h-screen">
+        <app-categories (showCategory)="onShowCategory($event)"></app-categories>
         <main class="flex-1 p-4">
             <app-products-header (columnsCountChange)="onColumnsCountChange($event)"></app-products-header>
-            test {{ cols }}
+            test {{ category }}
             <section>
                 <h2 class="text-lg font-semibold mb-4">Popular Products</h2>
                 <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">

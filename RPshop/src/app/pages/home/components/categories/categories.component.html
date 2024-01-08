@@ -1,0 +1,11 @@
+<aside *ngIf="categories" class="hidden lg:block border-r min-h-screen bg-gray-100/40 dark:bg-gray-800/40">
+    <div class="flex flex-col gap-4 items-start py-2 px-4">
+        <h2 class="text-lg font-bold">Categories</h2>
+        <mat-selection-list [multiple]="false">
+            <mat-list-option *ngFor="let category of categories" [value]="category" color="primary"
+                (click)="onShowCategory(category)">
+                <button>{{ category }}</button>
+            </mat-list-option>
+        </mat-selection-list>
+    </div>
+</aside>
