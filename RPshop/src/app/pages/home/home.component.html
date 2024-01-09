@@ -2,10 +2,12 @@
     <div class="flex flex-col lg:flex-row min-h-screen">
         <app-categories (showCategory)="onShowCategory($event)"></app-categories>
         <main class="flex-1 p-4">
-            <app-products-header (columnsCountChange)="onColumnsCountChange($event)"></app-products-header>
+            <app-products-header (columnsCountChange)="onColumnsCountChange($event)"
+                (itemsCountChange)="onitemsCountChange($event)"
+                (SortChange)="onSortChange($event)"></app-products-header>
             <mat-grid-list gutterSize="40" [cols]="cols" [rowHeight]="rowHeight">
-                <mat-grid-tile>
-                    <app-product-box (addToCart)="onAddToCart($event)" class="w-full"
+                <mat-grid-tile *ngFor="let product of products">
+                    <app-product-box [product]="product" (addToCart)="onAddToCart($event)" class="w-full"
                         [fullWidthMode]="cols === 1"></app-product-box>
                 </mat-grid-tile>
             </mat-grid-list>

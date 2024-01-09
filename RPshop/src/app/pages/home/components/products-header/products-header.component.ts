@@ -7,15 +7,20 @@ import { Component, Output, EventEmitter } from '@angular/core';
 export class ProductsHeaderComponent {
 
   @Output() columnsCountChange = new EventEmitter<number>();
+  @Output() itemsCountChange = new EventEmitter<number>();
+  @Output() SortChange = new EventEmitter<string>();
+
   sort = 'ascending';
-  itemsShown = 12;
+  itemsShown = 10;
 
   onSortUpdate(newSort: string): void {
     this.sort = newSort;
+    this.SortChange.emit(newSort);
   }
 
   onItemsShownUpdate(newItemsShown: number): void {
     this.itemsShown = newItemsShown;
+    this.itemsCountChange.emit(newItemsShown);
   }
 
   onColumnsUpdate(newColumns: number): void {
