@@ -25,6 +25,7 @@ import { ProductsHeaderComponent } from './pages/home/components/products-header
 import { CategoriesComponent } from './pages/home/components/categories/categories.component';
 import { ProductBoxComponent } from './pages/home/components/product-box/product-box.component';
 import { CartComponent } from './pages/cart/cart.component';
+import { CartService } from './services/cart.service';
 
 @NgModule({
   declarations: [
@@ -55,7 +56,7 @@ import { CartComponent } from './pages/cart/cart.component';
     MatSnackBarModule,
   ],
   providers: [
-    provideClientHydration()
+    provideClientHydration(), CartService
   ],
   bootstrap: [AppComponent]
 })

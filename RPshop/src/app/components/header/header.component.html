@@ -1,34 +1,23 @@
 <mat-toolbar class="mx-auto border-x justify-between p-4 !bg-white shadow-md">
     <a routerLink="home">RPshop</a>
     <button mat-icon-button [matMenuTriggerFor]="menu">
-        <mat-icon [matBadge]="3" matBadgeColor="warn">shopping_cart</mat-icon>
+        <mat-icon [matBadge]="itemsQuantity" [matBadgeHidden]="!itemsQuantity"
+            matBadgeColor="warn">shopping_cart</mat-icon>
     </button>
     <mat-menu #menu="matMenu">
         <div class="p-3 divide-y divide-solid">
             <div class="pb-3">
                 <a routerLink="cart">
                     <button mat-menu-item>
-                        <span class="mr-16">3 items</span>
+                        <span class="mr-16">{{ itemsQuantity }} items</span>
                         <span>View Cart</span>
                     </button>
                 </a>
             </div>
-            <div class="p-3">
-                <div class="flex justify-between">
-                    <span>Product 1 x 1</span>
-                    <span class="font-bold">{{ '150' | currency:'EUR' }}</span>
-                </div>
-                <div class="flex justify-between">
-                    <span>Product 2 x 1</span>
-                    <span class="font-bold">{{ '150' | currency:'EUR' }}</span>
-                </div>
-                <div class="flex justify-between">
-                    <span>Product 3 x 1</span>
-                    <span class="font-bold">{{ '150' | currency:'EUR' }}</span>
-                </div>
-                <div class="flex justify-between pt-3">
-                    <span>Total:</span>
-                    <span class="font-bold">{{ '450' | currency:'EUR' }}</span>
+            <div *ngIf="cart.items.length" class="p-3">
+                <div *ngFor="let item of cart.items" class="flex justify-between">
+                    <span>{{ item.name }} x {{ item.quantity }}</span>
+                    <span class="font-bold">{{ item.price | currency:'EUR' }}</span>
                 </div>
             </div>
             <div class="pt-3">
