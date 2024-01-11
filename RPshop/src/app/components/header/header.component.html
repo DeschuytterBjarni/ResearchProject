@@ -21,12 +21,10 @@
                 </div>
             </div>
             <div class="pt-3">
-                <a routerLink="payment" class="flex">
-                    <button mat-menu-item class="!justify-center">
-                        <mat-icon>payment</mat-icon>
-                        <span>Checkout</span>
-                    </button>
-                </a>
+                <button (click)="onCheckout()" mat-menu-item class="!justify-center">
+                    <mat-icon>payment</mat-icon>
+                    <span>Checkout</span>
+                </button>
             </div>
         </div>
     </mat-menu>
