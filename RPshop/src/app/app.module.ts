@@ -29,9 +29,7 @@ import { CartComponent } from './pages/cart/cart.component';
 import { CartService } from './services/cart.service';
 import { StoreService } from './services/store.service';
 import { HttpClientModule } from '@angular/common/http';
-import { NgxStripeModule } from 'ngx-stripe';
-import { environment } from '../environments/environment';
-import { CheckoutComponent } from './pages/checkout/checkout.component';
+
 
 @NgModule({
   declarations: [
@@ -42,7 +40,6 @@ import { CheckoutComponent } from './pages/checkout/checkout.component';
     CategoriesComponent,
     ProductBoxComponent,
     CartComponent,
-    CheckoutComponent
   ],
   imports: [
     BrowserModule,
