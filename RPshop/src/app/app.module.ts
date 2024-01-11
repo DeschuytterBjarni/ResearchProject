@@ -29,6 +29,8 @@ import { CartComponent } from './pages/cart/cart.component';
 import { CartService } from './services/cart.service';
 import { StoreService } from './services/store.service';
 import { HttpClientModule } from '@angular/common/http';
+import { SpeechService } from './services/speech.service';
+import { ListenComponent } from './components/listen/listen.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +41,7 @@ import { HttpClientModule } from '@angular/common/http';
     CategoriesComponent,
     ProductBoxComponent,
     CartComponent,
+    ListenComponent,
   ],
   imports: [
     BrowserModule,
@@ -60,7 +63,7 @@ import { HttpClientModule } from '@angular/common/http';
     HttpClientModule
   ],
   providers: [
-    provideClientHydration(), CartService, StoreService
+    provideClientHydration(), CartService, StoreService, SpeechService
   ],
   bootstrap: [AppComponent]
 })
