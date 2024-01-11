@@ -25,7 +25,7 @@ app.post("/checkout", async (req, res, next) => {
                     amount: 0,
                     currency: 'eur',
                 },
-                display_name: 'Free shipping',
+                display_name: 'Gratis verzending',
                 // Delivers between 5-7 business days
                 delivery_estimate: {
                     minimum: {
@@ -46,7 +46,7 @@ app.post("/checkout", async (req, res, next) => {
                     amount: 1500,
                     currency: 'eur',
                 },
-                display_name: 'Next day air',
+                display_name: 'Volgende dag geleverd',
                 // Delivers in exactly 1 business day
                 delivery_estimate: {
                     minimum: {
