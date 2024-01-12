@@ -1,9 +1,10 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, NgZone } from '@angular/core';
 import { CartService } from '../../services/cart.service';
 import { Product } from '../../models/product.model';
 import { Subscription } from 'rxjs';
 import { StoreService } from '../../services/store.service';
 import { get } from 'http';
+import { SpeechService } from '../../services/speech.service';
 
 const ROWS_HEIGHT: { [id: number]: number } = { 1: 400, 3: 355, 4: 350 }
 
@@ -21,7 +22,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   count = '10';
   productsSubscription: Subscription | undefined;
 
-  constructor(private cartService: CartService, private storeService: StoreService) { }
+  constructor(private cartService: CartService, private storeService: StoreService, public speech: SpeechService) { }
 
   ngOnInit(): void {
     this.getProducts();

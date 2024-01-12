@@ -7,6 +7,7 @@ declare const annyang: any;
 @Injectable()
 export class SpeechService {
   words$ = new Subject<{ [key: string]: string }>();
+  string$ = new Subject<string>();
   errors$ = new Subject<{ [key: string]: any }>();
   listening = false;
 
@@ -18,26 +19,42 @@ export class SpeechService {
 
   init() {
     const commands = {
-      'noun :noun': (noun: any) => {
+      'add (to cart) *item': (res: any) => {
         this.zone.run(() => {
-          this.words$.next({ type: 'noun', 'word': noun });
+          this.string$.next(res);
         });
       },
-      'verb :verb': (verb: any) => {
+      'sort by :sort': (res: any) => {
         this.zone.run(() => {
-          this.words$.next({ type: 'verb', 'word': verb });
+          this.string$.next(res);
         });
       },
-      'adjective :adj': (adj: any) => {
+      'swords by :sort': (res: any) => {
         this.zone.run(() => {
-          this.words$.next({ type: 'adj', 'word': adj });
+          this.string$.next(res);
+        });
+      },
+      'show :num items': (res: any) => {
+        this.zone.run(() => {
+          this.string$.next(res);
+        });
+      },
+      'change (to next) layout': () => {
+        this.zone.run(() => {
+          this.string$.next('change layout');
+        });
+      },
+      'stop listening': () => {
+        this.zone.run(() => {
+          this.string$.next('stop listening');
         });
       }
+
     };
     annyang.addCommands(commands);
 
     // Log anything the user says and what speech recognition thinks it might be
-    // annyang.addCallback('result', (userSaid) => {
+    // annyang.addCallback('result', (userSaid: any) => {
     //   console.log('User may have said:', userSaid);
     // });
     annyang.addCallback('errorNetwork', (err: any) => {
@@ -52,7 +69,7 @@ export class SpeechService {
     annyang.addCallback('resultNoMatch', (userSaid: any) => {
       this._handleError(
         'no match',
-        'Spoken command not recognized. Say "noun [word]", "verb [word]", OR "adjective [word]".',
+        'Spoken command not recognized.',
         { results: userSaid });
     });
   }
