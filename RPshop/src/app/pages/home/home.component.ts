@@ -77,20 +77,24 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
     if (text.includes('to cart:')) {
       let product = text.replace('to cart:', '');
-      console.log('levenshteinDis: ', this.lvnDis.LevenshteinAfstand(product, 'Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops'));
       // check LevenshteinAfstand against all products
       if (this.products) {
         let shortestDistance = 100;
         let bestMatch: string | undefined;
+        let bestMatchProduct: Product | undefined;
 
         for (const p of this.products) {
-          if (shortestDistance >= this.lvnDis.LevenshteinAfstand(product, p.title)) {
-            shortestDistance = this.lvnDis.LevenshteinAfstand(product, p.title);
+          if (shortestDistance > this.lvnDis.LevenshteinAfstand(product, p.title) - p.title.length) {
+            shortestDistance = this.lvnDis.LevenshteinAfstand(product, p.title) - p.title.length;
             bestMatch = p.title;
+            bestMatchProduct = p;
           }
-          console.log('levenshteinDis: ', this.lvnDis.LevenshteinAfstand(product, p.title));
+          console.log('levenshteinDis: ', p.title, " ", this.lvnDis.LevenshteinAfstand(product, p.title) - p.title.length);
         }
         console.log('bestMatch: ', bestMatch, shortestDistance);
+        if (bestMatchProduct) {
+          this.onAddToCart(bestMatchProduct);
+        }
       }
     }
   }
