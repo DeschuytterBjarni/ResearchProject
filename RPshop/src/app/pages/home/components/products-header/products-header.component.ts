@@ -14,7 +14,6 @@ export class ProductsHeaderComponent {
   @Output() SortChange = new EventEmitter<string>();
 
   listenSubscription: Subscription | undefined;
-  columnsSubscription: Subscription | undefined;
 
   sort = 'ascending';
   itemsShown = 10;

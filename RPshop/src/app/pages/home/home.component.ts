@@ -21,11 +21,13 @@ export class HomeComponent implements OnInit, OnDestroy {
   sort = 'asc';
   count = '10';
   productsSubscription: Subscription | undefined;
+  listenSubscription: Subscription | undefined;
 
   constructor(private cartService: CartService, private storeService: StoreService, public speech: SpeechService) { }
 
   ngOnInit(): void {
     this.getProducts();
+    this._listen();
   }
 
   getProducts(): void {
@@ -68,9 +70,24 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.getProducts();
   }
 
+  private _setString(text: string) {
+    if (text) {
+      console.log('Speech Recognition home:', text);
+    }
+    // match the text to a command
+    if (text.includes('to cart:')) {
+      console.log('to cart: ', text);
+    }
+  }
+
+  private _listen() {
+    this.listenSubscription = this.speech.string$.subscribe(text => this._setString(text));
+  }
+
   ngOnDestroy(): void {
     if (this.productsSubscription) {
       this.productsSubscription.unsubscribe();
     }
+    this.listenSubscription?.unsubscribe();
   }
 }
