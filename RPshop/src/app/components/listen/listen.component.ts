@@ -20,6 +20,7 @@ export class ListenComponent implements OnInit, OnDestroy {
     this.speech.init();
     this._listen();
     this._listenErrors();
+    // this.speech.startListening(); // comment this line to stop listening on page load
   }
 
   get btnLabel(): string {

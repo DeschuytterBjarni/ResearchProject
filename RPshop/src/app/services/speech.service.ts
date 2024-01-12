@@ -21,7 +21,8 @@ export class SpeechService {
     const commands = {
       'add *item': (res: any) => {
         this.zone.run(() => {
-          res = res.replace('to cart: ', res);
+          res = "to cart: " + res;
+          console.log(res);
           this.string$.next(res);
         });
       },

@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { StoreService } from '../../services/store.service';
 import { get } from 'http';
 import { SpeechService } from '../../services/speech.service';
+import { LevenshteinDistanceService } from '../../services/levenshtein-distance.service';
 
 const ROWS_HEIGHT: { [id: number]: number } = { 1: 400, 3: 355, 4: 350 }
 
@@ -23,7 +24,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   productsSubscription: Subscription | undefined;
   listenSubscription: Subscription | undefined;
 
-  constructor(private cartService: CartService, private storeService: StoreService, public speech: SpeechService) { }
+  constructor(private cartService: CartService, private storeService: StoreService, public speech: SpeechService, public lvnDis: LevenshteinDistanceService) { }
 
   ngOnInit(): void {
     this.getProducts();
@@ -74,9 +75,23 @@ export class HomeComponent implements OnInit, OnDestroy {
     if (text) {
       console.log('Speech Recognition home:', text);
     }
-    // match the text to a command
     if (text.includes('to cart:')) {
-      console.log('to cart: ', text);
+      let product = text.replace('to cart:', '');
+      console.log('levenshteinDis: ', this.lvnDis.LevenshteinAfstand(product, 'Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops'));
+      // check LevenshteinAfstand against all products
+      if (this.products) {
+        let shortestDistance = 100;
+        let bestMatch: string | undefined;
+
+        for (const p of this.products) {
+          if (shortestDistance >= this.lvnDis.LevenshteinAfstand(product, p.title)) {
+            shortestDistance = this.lvnDis.LevenshteinAfstand(product, p.title);
+            bestMatch = p.title;
+          }
+          console.log('levenshteinDis: ', this.lvnDis.LevenshteinAfstand(product, p.title));
+        }
+        console.log('bestMatch: ', bestMatch, shortestDistance);
+      }
     }
   }
 
