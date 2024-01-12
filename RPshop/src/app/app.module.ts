@@ -31,6 +31,7 @@ import { StoreService } from './services/store.service';
 import { HttpClientModule } from '@angular/common/http';
 import { SpeechService } from './services/speech.service';
 import { ListenComponent } from './components/listen/listen.component';
+import { LevenshteinDistanceService } from './services/levenshtein-distance.service';
 
 @NgModule({
   declarations: [
@@ -63,7 +64,7 @@ import { ListenComponent } from './components/listen/listen.component';
     HttpClientModule
   ],
   providers: [
-    provideClientHydration(), CartService, StoreService, SpeechService
+    provideClientHydration(), CartService, StoreService, SpeechService, LevenshteinDistanceService
   ],
   bootstrap: [AppComponent]
 })
