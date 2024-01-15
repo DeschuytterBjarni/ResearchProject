@@ -84,12 +84,13 @@ export class HomeComponent implements OnInit, OnDestroy {
         let bestMatchProduct: Product | undefined;
 
         for (const p of this.products) {
-          if (shortestDistance > this.lvnDis.LevenshteinAfstand(product, p.title) - p.title.length) {
-            shortestDistance = this.lvnDis.LevenshteinAfstand(product, p.title) - p.title.length;
+          const check = this.lvnDis.LevenshteinAfstand(product, p.title.slice(0, 25));
+          if (shortestDistance > check) {
+            shortestDistance = check;
             bestMatch = p.title;
             bestMatchProduct = p;
           }
-          console.log('levenshteinDis: ', p.title, " ", this.lvnDis.LevenshteinAfstand(product, p.title) - p.title.length);
+          console.log('levenshteinDis: ', p.title, " ", check);
         }
         console.log('bestMatch: ', bestMatch, shortestDistance);
         if (bestMatchProduct) {
