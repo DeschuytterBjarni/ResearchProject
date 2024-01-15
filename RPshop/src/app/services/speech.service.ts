@@ -46,6 +46,12 @@ export class SpeechService {
           this.string$.next('change layout');
         });
       },
+      'show category *cat': (res: any) => {
+        this.zone.run(() => {
+          res = "show category: " + res;
+          this.string$.next(res);
+        });
+      },
       'stop listening': () => {
         this.zone.run(() => {
           this.string$.next('stop listening');

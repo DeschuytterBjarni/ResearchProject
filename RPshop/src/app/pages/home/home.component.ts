@@ -3,7 +3,6 @@ import { CartService } from '../../services/cart.service';
 import { Product } from '../../models/product.model';
 import { Subscription } from 'rxjs';
 import { StoreService } from '../../services/store.service';
-import { get } from 'http';
 import { SpeechService } from '../../services/speech.service';
 import { LevenshteinDistanceService } from '../../services/levenshtein-distance.service';
 
@@ -97,6 +96,31 @@ export class HomeComponent implements OnInit, OnDestroy {
           this.onAddToCart(bestMatchProduct);
         }
       }
+    }
+    if (text.includes('show category: ')) {
+      let category = text.replace('show category: ', '');
+      this.storeService.getAllCategories().subscribe(allCategories => {
+        if (allCategories.includes(category)) {
+          this.onShowCategory(category);
+        } else {
+          // check LevenshteinAfstand against all categories
+          let shortestDistance = 100;
+          let bestMatch: string | undefined;
+
+          for (const c of allCategories) {
+            const check = this.lvnDis.LevenshteinAfstand(category, c);
+            if (shortestDistance > check) {
+              shortestDistance = check;
+              bestMatch = c;
+            }
+            if (shortestDistance < 3 && bestMatch) {
+              this.onShowCategory(bestMatch);
+            }
+            console.log('levenshteinDis: ', c, " ", check);
+          }
+          console.log('category not found', category);
+        }
+      });
     }
   }
 
