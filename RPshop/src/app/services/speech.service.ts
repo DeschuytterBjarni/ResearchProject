@@ -52,12 +52,17 @@ export class SpeechService {
           this.string$.next(res);
         });
       },
+      'go to (shopping) :nav': (res: any) => {
+        this.zone.run(() => {
+          res = "go to: " + res;
+          this.string$.next(res);
+        });
+      },
       'stop listening': () => {
         this.zone.run(() => {
           this.string$.next('stop listening');
         });
       }
-
     };
     annyang.addCommands(commands);
 
@@ -101,5 +106,4 @@ export class SpeechService {
     annyang.abort();
     this.listening = false;
   }
-
 }
