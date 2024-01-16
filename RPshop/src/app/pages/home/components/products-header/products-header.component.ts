@@ -40,9 +40,6 @@ export class ProductsHeaderComponent {
   }
 
   private _setString(text: string) {
-    if (text) {
-      console.log('Speech Recognition products-header:', text);
-    }
     // match the text to a command
     if (text.includes('ascending')) {
       console.log('ascending');

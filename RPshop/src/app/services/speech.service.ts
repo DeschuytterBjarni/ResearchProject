@@ -58,6 +58,29 @@ export class SpeechService {
           this.string$.next(res);
         });
       },
+      'clear (shopping) cart': () => {
+        this.zone.run(() => {
+          this.string$.next('clear cart');
+        });
+      },
+      'remove *item': (res: any) => {
+        this.zone.run(() => {
+          res = "remove: " + res;
+          this.string$.next(res);
+        });
+      },
+      'quantity up *item': (res: any) => {
+        this.zone.run(() => {
+          res = "quantity up: " + res;
+          this.string$.next(res);
+        });
+      },
+      'quantity down *item': (res: any) => {
+        this.zone.run(() => {
+          res = "quantity down: " + res;
+          this.string$.next(res);
+        });
+      },
       'stop listening': () => {
         this.zone.run(() => {
           this.string$.next('stop listening');

@@ -71,9 +71,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   private _setString(text: string) {
-    if (text) {
-      console.log('Speech Recognition home:', text);
-    }
     if (text.includes('to cart:')) {
       let product = text.replace('to cart:', '');
       // check LevenshteinAfstand against all products

@@ -51,9 +51,6 @@ export class HeaderComponent {
   }
 
   private _setString(text: string) {
-    if (text) {
-      console.log('Speech Recognition header:', text);
-    }
     if (text.includes('go to: ')) {
       let nav = text.replace('go to: ', '');
       if (nav === 'home') {
