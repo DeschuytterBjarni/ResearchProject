@@ -13,10 +13,20 @@ export class StoreService {
   constructor(private httpClient: HttpClient) { }
 
   getAllProducts(limit = '10', sort = 'asc', category?: string): Observable<Array<Product>> {
-    return this.httpClient.get<Array<Product>>(`${STORE_BASE_URL}/products${category ? '/category/' + category : ''}?limit=${limit}&sort=${sort}`);
+    try {
+      return this.httpClient.get<Array<Product>>(`${STORE_BASE_URL}/products${category ? '/category/' + category : ''}?limit=${limit}&sort=${sort}`);
+    } catch (error) {
+      console.error(error);
+      return new Observable<Array<Product>>();
+    }
   }
 
   getAllCategories(): Observable<Array<string>> {
-    return this.httpClient.get<Array<string>>(`${STORE_BASE_URL}/products/categories`);
+    try {
+      return this.httpClient.get<Array<string>>(`${STORE_BASE_URL}/products/categories`);
+    } catch (error) {
+      console.error(error);
+      return new Observable<Array<string>>();
+    }
   }
 }
