@@ -9,6 +9,7 @@ export class SpeechService {
   string$ = new Subject<string>();
   item$ = new Subject<string>();
   category$ = new Subject<string>();
+  navigation$ = new Subject<string>();
   errors$ = new Subject<{ [key: string]: any }>();
   listening = false;
 
@@ -61,7 +62,7 @@ export class SpeechService {
       'go to (shopping) :nav': (res: any) => {
         this.zone.run(() => {
           res = "go to: " + res;
-          this.string$.next(res);
+          this.navigation$.next(res);
         });
       },
     }

@@ -14,7 +14,6 @@ import { Router } from '@angular/router';
 export class HeaderComponent {
   private _cart: Cart = { items: [] };
   itemsQuantity = 0;
-
   listenSubscription: Subscription | undefined;
 
   @Input()
@@ -50,23 +49,25 @@ export class HeaderComponent {
     });
   }
 
-  private _setString(text: string) {
-    if (text.includes('go to: ')) {
-      let nav = text.replace('go to: ', '');
-      if (nav === 'home') {
+  private _setString(nav: string) {
+    switch (nav) {
+      case 'home':
         this.router.navigate(['/']);
-      }
-      else if (nav === 'cart' || nav === 'carts' || nav === 'card' || nav === 'cards') {
+        break;
+      case 'cart':
         this.router.navigate(['/cart']);
-      }
-      else if (nav === 'checkout' || nav === 'checkouts') {
+        break;
+      case 'checkout':
         this.onCheckout();
-      }
+        break;
+      default:
+        console.log('Navigation not found, please try again');
+        break;
     }
   }
 
   private _listen() {
-    this.listenSubscription = this.speech.string$.subscribe(text => this._setString(text));
+    this.listenSubscription = this.speech.navigation$.subscribe(nav => this._setString(nav));
   }
 
   ngOnDestroy() {
