@@ -67,64 +67,63 @@ export class CartComponent {
   }
 
   private _listen() {
-    this.listenSubscription = this.speech.string$.subscribe(text => this._setString(text));
+    this.listenSubscription = this.speech.cart$.subscribe(text => this._setString(text));
   }
 
   private _setString(text: string) {
     let shortestDistance = 100;
     let bestMatch: string | undefined;
     let bestMatchProduct: CartItem | undefined;
-
-    if (text.includes('clear cart')) {
-      this.onClearCart();
-    }
-
-    if (text.includes('quantity up: ')) {
-      let product = text.replace('quantity up: ', '');
-      for (const item of this.cart.items) {
-        const check = this.lvnDis.LevenshteinAfstand(product, item.name.slice(0, 25));
-        if (check < shortestDistance) {
-          shortestDistance = check;
-          bestMatch = item.name;
-          bestMatchProduct = item;
+    let product: string | undefined;
+    switch (text) {
+      case 'clear cart':
+        this.onClearCart();
+        break;
+      case 'quantity up: ':
+        product = text.replace('quantity up: ', '');
+        for (const item of this.cart.items) {
+          const check = this.lvnDis.LevenshteinAfstand(product, item.name.slice(0, 25));
+          if (check < shortestDistance) {
+            shortestDistance = check;
+            bestMatch = item.name;
+            bestMatchProduct = item;
+          }
         }
-      }
-      console.log('bestMatch:', bestMatch);
-      if (bestMatchProduct) {
-        this.onAddQuantity(bestMatchProduct);
-      }
-    }
-
-    if (text.includes('quantity down: ')) {
-      let product = text.replace('quantity down: ', '');
-      for (const item of this.cart.items) {
-        const check = this.lvnDis.LevenshteinAfstand(product, item.name.slice(0, 25));
-        if (check < shortestDistance) {
-          shortestDistance = check;
-          bestMatch = item.name;
-          bestMatchProduct = item;
+        console.log('bestMatch:', bestMatch);
+        if (bestMatchProduct) {
+          this.onAddQuantity(bestMatchProduct);
         }
-      }
-      console.log('bestMatch:', bestMatch);
-      if (bestMatchProduct) {
-        this.onReduceQuantity(bestMatchProduct);
-      }
-    }
-
-    if (text.includes('remove: ')) {
-      let product = text.replace('remove: ', '');
-      for (const item of this.cart.items) {
-        const check = this.lvnDis.LevenshteinAfstand(product, item.name.slice(0, 25));
-        if (check < shortestDistance) {
-          shortestDistance = check;
-          bestMatch = item.name;
-          bestMatchProduct = item;
+        break;
+      case 'quantity down: ':
+        product = text.replace('quantity down: ', '');
+        for (const item of this.cart.items) {
+          const check = this.lvnDis.LevenshteinAfstand(product, item.name.slice(0, 25));
+          if (check < shortestDistance) {
+            shortestDistance = check;
+            bestMatch = item.name;
+            bestMatchProduct = item;
+          }
         }
-      }
-      console.log('bestMatch:', bestMatch);
-      if (bestMatchProduct) {
-        this.onRemoveFromCart(bestMatchProduct);
-      }
+        console.log('bestMatch:', bestMatch);
+        if (bestMatchProduct) {
+          this.onReduceQuantity(bestMatchProduct);
+        }
+        break;
+      case 'remove: ':
+        product = text.replace('remove: ', '');
+        for (const item of this.cart.items) {
+          const check = this.lvnDis.LevenshteinAfstand(product, item.name.slice(0, 25));
+          if (check < shortestDistance) {
+            shortestDistance = check;
+            bestMatch = item.name;
+            bestMatchProduct = item;
+          }
+        }
+        console.log('bestMatch:', bestMatch);
+        if (bestMatchProduct) {
+          this.onRemoveFromCart(bestMatchProduct);
+        }
+        break;
     }
   }
 

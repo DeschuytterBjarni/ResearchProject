@@ -10,6 +10,7 @@ export class SpeechService {
   item$ = new Subject<string>();
   category$ = new Subject<string>();
   navigation$ = new Subject<string>();
+  cart$ = new Subject<string>();
   errors$ = new Subject<{ [key: string]: any }>();
   listening = false;
 
@@ -21,12 +22,6 @@ export class SpeechService {
 
   init() {
     const controlCommands = {
-      'add *item': (res: any) => {
-        this.zone.run(() => {
-          console.log(res);
-          this.item$.next(res);
-        });
-      },
       'sort by :sort': (res: any) => {
         this.zone.run(() => {
           this.string$.next(res);
@@ -67,28 +62,33 @@ export class SpeechService {
       },
     }
     const cartCommands = {
-
+      'add *item': (res: any) => {
+        this.zone.run(() => {
+          console.log(res);
+          this.item$.next(res);
+        });
+      },
       'clear (shopping) cart': () => {
         this.zone.run(() => {
-          this.string$.next('clear cart');
+          this.cart$.next('clear cart');
         });
       },
       'remove *item': (res: any) => {
         this.zone.run(() => {
           res = "remove: " + res;
-          this.string$.next(res);
+          this.cart$.next(res);
         });
       },
       'quantity up *item': (res: any) => {
         this.zone.run(() => {
           res = "quantity up: " + res;
-          this.string$.next(res);
+          this.cart$.next(res);
         });
       },
       'quantity down *item': (res: any) => {
         this.zone.run(() => {
           res = "quantity down: " + res;
-          this.string$.next(res);
+          this.cart$.next(res);
         });
       },
     };
