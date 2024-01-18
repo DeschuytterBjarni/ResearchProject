@@ -21,7 +21,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   sort = 'asc';
   count = '10';
   productsSubscription: Subscription | undefined;
-  listenSubscription: Subscription | undefined;
+  itemSubscription: Subscription | undefined;
+  categorySubscription: Subscription | undefined;
 
   constructor(private cartService: CartService, private storeService: StoreService, public speech: SpeechService, public lvnDis: LevenshteinDistanceService) { }
 
@@ -70,65 +71,62 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.getProducts();
   }
 
-  private _setString(text: string) {
-    if (text.includes('to cart:')) {
-      let product = text.replace('to cart:', '');
-      // check LevenshteinAfstand against all products
-      if (this.products) {
-        let shortestDistance = 100;
-        let bestMatch: string | undefined;
-        let bestMatchProduct: Product | undefined;
+  private _setItemString(product: string) {
+    // check LevenshteinAfstand against all products
+    if (this.products) {
+      let shortestDistance = 100;
+      let bestMatch: string | undefined;
+      let bestMatchProduct: Product | undefined;
 
-        for (const p of this.products) {
-          const check = this.lvnDis.LevenshteinAfstand(product, p.title.slice(0, 25));
-          if (shortestDistance > check) {
-            shortestDistance = check;
-            bestMatch = p.title;
-            bestMatchProduct = p;
-          }
-          console.log('levenshteinDis: ', p.title, " ", check);
+      for (const p of this.products) {
+        const check = this.lvnDis.LevenshteinAfstand(product, p.title.slice(0, 25));
+        if (shortestDistance > check) {
+          shortestDistance = check;
+          bestMatch = p.title;
+          bestMatchProduct = p;
         }
-        console.log('bestMatch: ', bestMatch, shortestDistance);
-        if (bestMatchProduct) {
-          this.onAddToCart(bestMatchProduct);
-        }
+        console.log('levenshteinDis: ', p.title, " ", check);
+      }
+      console.log('bestMatch: ', bestMatch, shortestDistance);
+      if (bestMatchProduct) {
+        this.onAddToCart(bestMatchProduct);
       }
     }
-    if (text.includes('show category: ')) {
-      let category = text.replace('show category: ', '');
-      this.storeService.getAllCategories().subscribe(allCategories => {
-        if (allCategories.includes(category)) {
-          this.onShowCategory(category);
-        } else {
-          // check LevenshteinAfstand against all categories
-          let shortestDistance = 100;
-          let bestMatch: string | undefined;
+  }
 
-          for (const c of allCategories) {
-            const check = this.lvnDis.LevenshteinAfstand(category, c);
-            if (shortestDistance > check) {
-              shortestDistance = check;
-              bestMatch = c;
-            }
-            if (shortestDistance < 3 && bestMatch) {
-              this.onShowCategory(bestMatch);
-            }
-            console.log('levenshteinDis: ', c, " ", check);
+  private _setCategoryString(category: string) {
+    this.storeService.getAllCategories().subscribe(allCategories => {
+      if (allCategories.includes(category)) {
+        this.onShowCategory(category);
+      } else {
+        // check LevenshteinAfstand against all categories
+        let shortestDistance = 100;
+        let bestMatch: string | undefined;
+
+        for (const c of allCategories) {
+          const check = this.lvnDis.LevenshteinAfstand(category, c);
+          if (shortestDistance > check) {
+            shortestDistance = check;
+            bestMatch = c;
           }
-          console.log('category not found', category);
+          if (shortestDistance < 3 && bestMatch) {
+            this.onShowCategory(bestMatch);
+          }
+          console.log('levenshteinDis: ', c, " ", check);
         }
-      });
-    }
+        console.log('category not found', category);
+      }
+    });
   }
 
   private _listen() {
-    this.listenSubscription = this.speech.string$.subscribe(text => this._setString(text));
+    this.itemSubscription = this.speech.item$.subscribe(text => this._setItemString(text));
+    this.categorySubscription = this.speech.category$.subscribe(text => this._setCategoryString(text));
   }
 
   ngOnDestroy(): void {
-    if (this.productsSubscription) {
-      this.productsSubscription.unsubscribe();
-    }
-    this.listenSubscription?.unsubscribe();
+    this.productsSubscription?.unsubscribe();
+    this.itemSubscription?.unsubscribe();
+    this.categorySubscription?.unsubscribe();
   }
 }

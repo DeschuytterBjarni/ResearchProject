@@ -2,12 +2,13 @@ import { Injectable, NgZone } from '@angular/core';
 import { Subject } from 'rxjs';
 
 // TypeScript declaration for annyang
-declare const annyang: any;
+declare const annyang: any | undefined;
 
 @Injectable()
 export class SpeechService {
-  words$ = new Subject<{ [key: string]: string }>();
   string$ = new Subject<string>();
+  item$ = new Subject<string>();
+  category$ = new Subject<string>();
   errors$ = new Subject<{ [key: string]: any }>();
   listening = false;
 
@@ -18,12 +19,11 @@ export class SpeechService {
   }
 
   init() {
-    const commands = {
+    const controlCommands = {
       'add *item': (res: any) => {
         this.zone.run(() => {
-          res = "to cart: " + res;
           console.log(res);
-          this.string$.next(res);
+          this.item$.next(res);
         });
       },
       'sort by :sort': (res: any) => {
@@ -48,16 +48,25 @@ export class SpeechService {
       },
       'show category *cat': (res: any) => {
         this.zone.run(() => {
-          res = "show category: " + res;
-          this.string$.next(res);
+          this.category$.next(res);
         });
       },
+      'stop listening': () => {
+        this.zone.run(() => {
+          this.string$.next('stop listening');
+        });
+      },
+    }
+    const navigationCommands = {
       'go to (shopping) :nav': (res: any) => {
         this.zone.run(() => {
           res = "go to: " + res;
           this.string$.next(res);
         });
       },
+    }
+    const cartCommands = {
+
       'clear (shopping) cart': () => {
         this.zone.run(() => {
           this.string$.next('clear cart');
@@ -81,13 +90,10 @@ export class SpeechService {
           this.string$.next(res);
         });
       },
-      'stop listening': () => {
-        this.zone.run(() => {
-          this.string$.next('stop listening');
-        });
-      }
     };
-    annyang.addCommands(commands);
+    annyang.addCommands(controlCommands);
+    annyang.addCommands(navigationCommands);
+    annyang.addCommands(cartCommands);
 
     // Log anything the user says and what speech recognition thinks it might be
     // annyang.addCallback('result', (userSaid: any) => {
