@@ -56,7 +56,6 @@ export class SpeechService {
     const navigationCommands = {
       'go to (shopping) :nav': (res: any) => {
         this.zone.run(() => {
-          res = "go to: " + res;
           this.navigation$.next(res);
         });
       },
