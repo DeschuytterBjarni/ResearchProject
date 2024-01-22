@@ -57,6 +57,15 @@ export class HeaderComponent {
       case 'cart':
         this.router.navigate(['/cart']);
         break;
+      case 'carts':
+        this.router.navigate(['/cart']);
+        break;
+      case 'card':
+        this.router.navigate(['/cart']);
+        break;
+      case 'cards':
+        this.router.navigate(['/cart']);
+        break;
       case 'checkout':
         this.onCheckout();
         break;

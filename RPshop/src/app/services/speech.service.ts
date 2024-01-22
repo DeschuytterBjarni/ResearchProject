@@ -21,6 +21,7 @@ export class SpeechService {
   }
 
   init() {
+    annyang.setLanguage('en-US');
     const controlCommands = {
       'sort by :sort': (res: any) => {
         this.zone.run(() => {
@@ -72,7 +73,18 @@ export class SpeechService {
           this.cart$.next('clear cart');
         });
       },
+      'clear (shopping) card': () => {
+        this.zone.run(() => {
+          this.cart$.next('clear cart');
+        });
+      },
       'remove *item': (res: any) => {
+        this.zone.run(() => {
+          res = "remove: " + res;
+          this.cart$.next(res);
+        });
+      },
+      'delete *item': (res: any) => {
         this.zone.run(() => {
           res = "remove: " + res;
           this.cart$.next(res);
