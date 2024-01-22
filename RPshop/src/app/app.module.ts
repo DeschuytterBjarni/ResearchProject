@@ -32,6 +32,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { SpeechService } from './services/speech.service';
 import { ListenComponent } from './components/listen/listen.component';
 import { LevenshteinDistanceService } from './services/levenshtein-distance.service';
+import { AssistantComponent } from './components/assistant/assistant.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { LevenshteinDistanceService } from './services/levenshtein-distance.serv
     ProductBoxComponent,
     CartComponent,
     ListenComponent,
+    AssistantComponent,
   ],
   imports: [
     BrowserModule,

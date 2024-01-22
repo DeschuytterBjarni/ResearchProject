@@ -8,6 +8,7 @@ import { SpeechService } from './services/speech.service';
   template: `
   <app-listen *ngIf="speech.speechSupported"></app-listen>
   <app-header [cart]="cart"></app-header>
+  <app-assistant *ngIf="speech.speechSupported"></app-assistant>
   <router-outlet></router-outlet>
   `,
   styles: []
