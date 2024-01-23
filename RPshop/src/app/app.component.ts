@@ -6,7 +6,6 @@ import { SpeechService } from './services/speech.service';
 @Component({
   selector: 'app-root',
   template: `
-  <app-listen *ngIf="speech.speechSupported"></app-listen>
   <app-header [cart]="cart"></app-header>
   <app-assistant *ngIf="speech.speechSupported"></app-assistant>
   <router-outlet></router-outlet>

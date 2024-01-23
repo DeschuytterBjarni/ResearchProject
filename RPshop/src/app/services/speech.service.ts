@@ -12,6 +12,7 @@ export class SpeechService {
   navigation$ = new Subject<string>();
   cart$ = new Subject<string>();
   errors$ = new Subject<{ [key: string]: any }>();
+  system$ = new Subject<string>();
   listening = false;
 
   constructor(private zone: NgZone) { }
@@ -26,31 +27,61 @@ export class SpeechService {
       'sort by :sort': (res: any) => {
         this.zone.run(() => {
           this.string$.next(res);
+          this.system$.next("Sorting by " + res + ".");
         });
       },
       'swords by :sort': (res: any) => {
         this.zone.run(() => {
           this.string$.next(res);
+          this.system$.next("Sorting by " + res + ".");
         });
       },
       'show :num items': (res: any) => {
         this.zone.run(() => {
           this.string$.next(res);
+          this.system$.next("Showing " + res + " items.");
         });
       },
       'change (to next) layout': () => {
         this.zone.run(() => {
           this.string$.next('change layout');
+          this.system$.next("Changing layout.");
         });
       },
       'show category *cat': (res: any) => {
         this.zone.run(() => {
           this.category$.next(res);
+          this.system$.next("Showing category " + res + ".");
+        });
+      },
+      'show assistant': () => {
+        this.zone.run(() => {
+          this.string$.next('show assistant');
+          this.system$.next("Showing assistant.");
+        });
+      },
+      'show assistance': () => {
+        this.zone.run(() => {
+          this.string$.next('show assistant');
+          this.system$.next("Showing assistant.");
+        });
+      },
+      'hide assistant': () => {
+        this.zone.run(() => {
+          this.string$.next('hide assistant');
+          this.system$.next("Hiding assistant.");
+        });
+      },
+      'hide assistance': () => {
+        this.zone.run(() => {
+          this.string$.next('hide assistant');
+          this.system$.next("Hiding assistant.");
         });
       },
       'stop listening': () => {
         this.zone.run(() => {
           this.string$.next('stop listening');
+          this.system$.next("Stopped listening.");
         });
       },
     }
@@ -58,6 +89,7 @@ export class SpeechService {
       'go to (shopping) :nav': (res: any) => {
         this.zone.run(() => {
           this.navigation$.next(res);
+          this.system$.next("going to " + res + " page");
         });
       },
     }
@@ -66,40 +98,47 @@ export class SpeechService {
         this.zone.run(() => {
           console.log(res);
           this.item$.next(res);
+          this.system$.next("adding " + res + " to cart");
         });
       },
       'clear (shopping) cart': () => {
         this.zone.run(() => {
           this.cart$.next('clear cart');
+          this.system$.next("clearing cart");
         });
       },
       'clear (shopping) card': () => {
         this.zone.run(() => {
           this.cart$.next('clear cart');
+          this.system$.next("clearing cart");
         });
       },
       'remove *item': (res: any) => {
         this.zone.run(() => {
           res = "remove: " + res;
           this.cart$.next(res);
+          this.system$.next("removing " + res + " from cart");
         });
       },
       'delete *item': (res: any) => {
         this.zone.run(() => {
           res = "remove: " + res;
           this.cart$.next(res);
+          this.system$.next("removing " + res + " from cart");
         });
       },
       'quantity up *item': (res: any) => {
         this.zone.run(() => {
           res = "quantity up: " + res;
           this.cart$.next(res);
+          this.system$.next("increasing quantity of " + res);
         });
       },
       'quantity down *item': (res: any) => {
         this.zone.run(() => {
           res = "quantity down: " + res;
           this.cart$.next(res);
+          this.system$.next("decreasing quantity of " + res);
         });
       },
     };
