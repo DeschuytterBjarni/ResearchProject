@@ -55,6 +55,20 @@ export class AssistantComponent {
     if (text) {
       console.log('Speech Recognition:', text);
     }
+    if (text.includes('scroll down')) {
+      window.scrollBy({
+        top: 450,
+        left: 0,
+        behavior: 'smooth'
+      })
+    }
+    if (text.includes('scroll up')) {
+      window.scrollBy({
+        top: -450,
+        left: 0,
+        behavior: 'smooth'
+      })
+    }
     if (text.includes('show assistant')) {
       this.assistantOn = true;
     }

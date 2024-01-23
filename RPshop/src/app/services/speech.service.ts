@@ -24,6 +24,18 @@ export class SpeechService {
   init() {
     annyang.setLanguage('en-US');
     const controlCommands = {
+      'scroll down': () => {
+        this.zone.run(() => {
+          this.string$.next('scroll down');
+          this.system$.next("Scrolling down.");
+        });
+      },
+      'scroll up': () => {
+        this.zone.run(() => {
+          this.string$.next('scroll up');
+          this.system$.next("Scrolling up.");
+        });
+      },
       'sort by :sort': (res: any) => {
         this.zone.run(() => {
           this.string$.next(res);
