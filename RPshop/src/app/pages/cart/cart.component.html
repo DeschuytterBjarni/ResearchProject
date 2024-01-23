@@ -6,7 +6,7 @@
                 <img src="{{ item.product }}" alt="product" class="w-[100px] my-5">
             </td>
             <td mat-footer-cell *matFooterCellDef>
-                <button mat-raised-button routerLink="/home">
+                <button (click)="speech.setPage('/home')" mat-raised-button routerLink="/home">
                     Continue Shopping!
                 </button>
             </td>
@@ -78,7 +78,7 @@
 <mat-card class="p-4 !bg-transparent" *ngIf="!cart.items.length">
     <mat-card-content>
         <p>Your cart is empty.
-            <button class="ml-4" mat-raised-button routerLink="/home">
+            <button (click)="speech.setPage('/home')" class="ml-4" mat-raised-button routerLink="/home">
                 Start Shopping!
             </button>
         </p>

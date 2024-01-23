@@ -52,18 +52,23 @@ export class HeaderComponent {
   private _setString(nav: string) {
     switch (nav) {
       case 'home':
+        this.speech.setPage('/home');
         this.router.navigate(['/']);
         break;
       case 'cart':
+        this.speech.setPage('/cart');
         this.router.navigate(['/cart']);
         break;
       case 'carts':
+        this.speech.setPage('/cart');
         this.router.navigate(['/cart']);
         break;
       case 'card':
+        this.speech.setPage('/cart');
         this.router.navigate(['/cart']);
         break;
       case 'cards':
+        this.speech.setPage('/cart');
         this.router.navigate(['/cart']);
         break;
       case 'checkout':

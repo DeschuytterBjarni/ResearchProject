@@ -16,6 +16,8 @@ export class AssistantComponent {
   errorsSub: Subscription | undefined;
   errorMsg: any;
   subscription: any;
+  pageSubscription: Subscription | undefined;
+  href: string = '';
 
   constructor(public speech: SpeechService, public talk: TalkService) { }
 
@@ -23,6 +25,7 @@ export class AssistantComponent {
     this.speech.init();
     this._listen();
     this._listenErrors();
+    this.speech.getPage();
     // this.speech.startListening(); // comment this line to stop listening on page load
   }
 
@@ -49,6 +52,11 @@ export class AssistantComponent {
   private _listen() {
     this.listen = this.speech.string$.subscribe(text => this._setString(text));
     this.system = this.speech.system$.subscribe(res => this._setResult(res));
+    this.pageSubscription = this.speech.page$.subscribe(page => this._setPage(page));
+  }
+
+  private _setPage(page: string) {
+    this.href = page;
   }
 
   private _setString(text: string) {

@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { Injectable, NgZone } from '@angular/core';
 import { Subject } from 'rxjs';
 
@@ -13,9 +14,10 @@ export class SpeechService {
   cart$ = new Subject<string>();
   errors$ = new Subject<{ [key: string]: any }>();
   system$ = new Subject<string>();
+  page$ = new Subject<string>();
   listening = false;
 
-  constructor(private zone: NgZone) { }
+  constructor(private zone: NgZone, private location: Location) { }
 
   get speechSupported(): boolean {
     return !!annyang;
@@ -187,6 +189,16 @@ export class SpeechService {
         obj: errObj
       });
     });
+  }
+
+  getPage(): void {
+    this.page$.next(
+      this.location.path()
+    );
+  }
+
+  setPage(page: string): void {
+    this.page$.next(page);
   }
 
   startListening() {
