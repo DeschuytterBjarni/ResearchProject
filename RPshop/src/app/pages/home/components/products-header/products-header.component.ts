@@ -91,7 +91,6 @@ export class ProductsHeaderComponent {
   }
 
   ngOnInit() {
-    this.speech.init();
     this._listen();
   }
   ngOnDestroy() {

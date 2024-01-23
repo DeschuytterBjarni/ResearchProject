@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { SpeechService } from '../../services/speech.service';
+import { TalkService } from '../../services/speech.service';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -10,13 +11,13 @@ export class AssistantComponent {
   assistantOn = true;
   listen: Subscription | undefined;
   system: Subscription | undefined;
-  systemMsg: any = [];
-  systemRecieved = false;
+  systemResult: { type: 'error' | 'result'; message: string }[] = [];
+  systemResultRecieved: boolean = false;
   errorsSub: Subscription | undefined;
   errorMsg: any;
   subscription: any;
 
-  constructor(public speech: SpeechService) { }
+  constructor(public speech: SpeechService, public talk: TalkService) { }
 
   ngOnInit() {
     this.speech.init();
@@ -38,6 +39,8 @@ export class AssistantComponent {
     if (err) {
       console.log('Speech Recognition:', err);
       this.errorMsg = err.message;
+      this.systemResultRecieved = true;
+      this.systemResult.push({ 'type': 'error', 'message': err.message });
     } else {
       this.errorMsg = null;
     }
@@ -65,10 +68,9 @@ export class AssistantComponent {
 
   private _setResult(res: string) {
     if (res) {
-      console.log(this.systemMsg);
-      this.systemMsg.push(res);
-      console.log(this.systemMsg);
-      this.systemRecieved = true;
+      console.log(res);
+      this.systemResultRecieved = true;
+      this.systemResult.push({ 'type': 'result', 'message': res });
     }
   }
 

@@ -29,7 +29,7 @@ import { CartComponent } from './pages/cart/cart.component';
 import { CartService } from './services/cart.service';
 import { StoreService } from './services/store.service';
 import { HttpClientModule } from '@angular/common/http';
-import { SpeechService } from './services/speech.service';
+import { SpeechService, TalkService } from './services/speech.service';
 import { ListenComponent } from './components/listen/listen.component';
 import { LevenshteinDistanceService } from './services/levenshtein-distance.service';
 import { AssistantComponent } from './components/assistant/assistant.component';
@@ -66,7 +66,7 @@ import { AssistantComponent } from './components/assistant/assistant.component';
     HttpClientModule
   ],
   providers: [
-    provideClientHydration(), CartService, StoreService, SpeechService, LevenshteinDistanceService
+    provideClientHydration(), CartService, StoreService, SpeechService, LevenshteinDistanceService, TalkService
   ],
   bootstrap: [AppComponent]
 })

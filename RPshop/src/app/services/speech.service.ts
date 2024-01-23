@@ -89,7 +89,7 @@ export class SpeechService {
       'go to (shopping) :nav': (res: any) => {
         this.zone.run(() => {
           this.navigation$.next(res);
-          this.system$.next("going to " + res + " page");
+          this.system$.next("Navigating to " + res + " page.");
         });
       },
     }
@@ -98,47 +98,47 @@ export class SpeechService {
         this.zone.run(() => {
           console.log(res);
           this.item$.next(res);
-          this.system$.next("adding " + res + " to cart");
+          this.system$.next("Adding " + res + " to cart.");
         });
       },
       'clear (shopping) cart': () => {
         this.zone.run(() => {
           this.cart$.next('clear cart');
-          this.system$.next("clearing cart");
+          this.system$.next("Clearing cart.");
         });
       },
       'clear (shopping) card': () => {
         this.zone.run(() => {
           this.cart$.next('clear cart');
-          this.system$.next("clearing cart");
+          this.system$.next("Clearing cart.");
         });
       },
       'remove *item': (res: any) => {
         this.zone.run(() => {
           res = "remove: " + res;
           this.cart$.next(res);
-          this.system$.next("removing " + res + " from cart");
+          this.system$.next("Removing " + res + " from cart.");
         });
       },
       'delete *item': (res: any) => {
         this.zone.run(() => {
           res = "remove: " + res;
           this.cart$.next(res);
-          this.system$.next("removing " + res + " from cart");
+          this.system$.next("Removing " + res + " from cart.");
         });
       },
       'quantity up *item': (res: any) => {
         this.zone.run(() => {
           res = "quantity up: " + res;
           this.cart$.next(res);
-          this.system$.next("increasing quantity of " + res);
+          this.system$.next("Increasing quantity of " + res + ".");
         });
       },
       'quantity down *item': (res: any) => {
         this.zone.run(() => {
           res = "quantity down: " + res;
           this.cart$.next(res);
-          this.system$.next("decreasing quantity of " + res);
+          this.system$.next("Decreasing quantity of " + res + ".");
         });
       },
     };
@@ -185,5 +185,28 @@ export class SpeechService {
   abort() {
     annyang.abort();
     this.listening = false;
+  }
+}
+
+
+@Injectable()
+export class TalkService {
+  private synthesis: SpeechSynthesis;
+
+  constructor() {
+    this.synthesis = window.speechSynthesis;
+  }
+
+  speak(text: string): void {
+    if (this.synthesis && text) {
+      const utterance = new SpeechSynthesisUtterance(text);
+      this.synthesis.speak(utterance);
+    }
+  }
+
+  cancel(): void {
+    if (this.synthesis) {
+      this.synthesis.cancel();
+    }
   }
 }
