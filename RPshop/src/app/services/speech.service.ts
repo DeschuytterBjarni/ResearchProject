@@ -141,14 +141,14 @@ export class SpeechService {
           this.system$.next("Removing " + res + " from cart.");
         });
       },
-      'quantity up *item': (res: any) => {
+      'increase quantity *item': (res: any) => {
         this.zone.run(() => {
           res = "quantity up: " + res;
           this.cart$.next(res);
           this.system$.next("Increasing quantity of " + res + ".");
         });
       },
-      'quantity down *item': (res: any) => {
+      'decrease quantity *item': (res: any) => {
         this.zone.run(() => {
           res = "quantity down: " + res;
           this.cart$.next(res);
