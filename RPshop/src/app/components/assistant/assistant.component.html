@@ -4,17 +4,19 @@
         <div class="flex justify-between pr-3">
             <div class="flex items-center gap-2">
                 <button *ngIf="!speech.listening" (click)="speech.startListening()" class="cursor-pointer">
-                    <img src="/assets/images/mic-mute-fill.svg" class="w-6 h-6">
+                    <img src="/assets/images/mic-mute-fill.svg" alt="mute mic" class="w-6 h-6">
                 </button>
                 <button *ngIf="speech.listening" (click)="speech.abort()" class="cursor-pointer">
-                    <img src="/assets/images/mic-fill.svg" class="w-6 h-6">
+                    <img src="/assets/images/mic-fill.svg" alt="mic-on" class="w-6 h-6">
                 </button>
                 <p class="text-sm font-medium !m-0">{{btnLabel}}</p>
             </div>
-            <button *ngIf="this.assistantOn" (click)="assistantOn = false" class="cursor-pointer">
+            <button aria-label="hide assistant" *ngIf="this.assistantOn" (click)="assistantOn = false"
+                class="cursor-pointer">
                 <mat-icon>expand_less</mat-icon>
             </button>
-            <button *ngIf="!this.assistantOn" (click)="assistantOn = true" class="cursor-pointer">
+            <button aria-label="show assistant" *ngIf="!this.assistantOn" (click)="assistantOn = true"
+                class="cursor-pointer">
                 <mat-icon>expand_more</mat-icon>
             </button>
         </div>

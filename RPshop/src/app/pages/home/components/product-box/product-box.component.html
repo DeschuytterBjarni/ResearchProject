@@ -4,7 +4,7 @@
             [ngClass]="{ 'h-[200px]': !fullWidthMode, 'h-[360px] w-[360px] flex items-center justify-center': fullWidthMode }">
             <img class="mx-auto p-3 rounded-2xl"
                 [ngClass]="{ 'h-[200px]': !fullWidthMode, 'max-h-[360px] max-w-[360px]': fullWidthMode }"
-                src="{{ product.image }}" />
+                src="{{ product.image }}" alt="{{ product.title }}" />
         </div>
         <div class="w-full" [ngClass]="{ 'px-8 flex flex-col justify-between': fullWidthMode }">
             <div class="p-3">
@@ -14,7 +14,7 @@
             </div>
             <div class="flex justify-between p-3">
                 <span class="font-bold">{{ product.price | currency:"EUR" }}</span>
-                <button (click)="onAddToCart()">
+                <button aria-label="add to shopping cart" (click)="onAddToCart()">
                     <mat-icon class="text-gray-400">add_shopping_cart</mat-icon>
                 </button>
             </div>

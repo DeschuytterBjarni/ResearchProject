@@ -1,6 +1,6 @@
 <mat-toolbar class="mx-auto border-x justify-between p-4 !bg-white shadow-md">
     <a (click)="speech.setPage('/home')" routerLink="home">RPshop</a>
-    <button mat-icon-button [matMenuTriggerFor]="menu">
+    <button aria-label="show cart" mat-icon-button [matMenuTriggerFor]="menu">
         <mat-icon [matBadge]="itemsQuantity" [matBadgeHidden]="!itemsQuantity"
             matBadgeColor="warn">shopping_cart</mat-icon>
     </button>
