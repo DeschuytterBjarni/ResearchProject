@@ -20,7 +20,7 @@ export class SpeechService {
   constructor(private zone: NgZone, private location: Location) { }
 
   get speechSupported(): boolean {
-    return !!annyang;
+    return typeof annyang !== 'undefined';
   }
 
   init() {
