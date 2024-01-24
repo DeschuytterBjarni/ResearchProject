@@ -58,7 +58,9 @@
               "@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.css"
             ],
-            "scripts": [],
+            "scripts": [
+              "src/assets/js/annyang.js"
+            ],
             "server": "src/main.server.ts",
             "prerender": true,
             "ssr": {

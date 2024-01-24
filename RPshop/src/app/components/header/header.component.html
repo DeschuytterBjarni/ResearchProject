@@ -1,5 +1,5 @@
 <mat-toolbar class="mx-auto border-x justify-between p-4 !bg-white shadow-md">
-    <a routerLink="home">RPshop</a>
+    <a (click)="speech.setPage('/home')" routerLink="home">RPshop</a>
     <button mat-icon-button [matMenuTriggerFor]="menu">
         <mat-icon [matBadge]="itemsQuantity" [matBadgeHidden]="!itemsQuantity"
             matBadgeColor="warn">shopping_cart</mat-icon>
@@ -7,7 +7,7 @@
     <mat-menu #menu="matMenu">
         <div class="p-3 divide-y divide-solid">
             <div class="pb-3">
-                <a routerLink="cart">
+                <a (click)="speech.setPage('/cart')" routerLink="cart">
                     <button mat-menu-item>
                         <span class="mr-16">{{ itemsQuantity }} items</span>
                         <span>View Cart</span>

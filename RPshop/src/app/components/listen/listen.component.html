@@ -1,0 +1,19 @@
+<div class="alert alert-info mt-3">
+    <div class="row mb-3">
+        <div class="col btn-group">
+            <button class="btn btn-primary col-6" (click)="speech.startListening()" [disabled]="speech.listening">
+                <img class="icon" src="/assets/images/mic-on.png" />{{btnLabel}}
+            </button>
+            <button class="btn btn-danger col-6" (click)="speech.abort()" [disabled]="!speech.listening">
+                <img class="icon" src="/assets/images/mic-off.png" />Stop
+            </button>
+        </div>
+    </div>
+    <div class="row" *ngIf="errorMsg">
+        <div class="col">
+            <p class="alert alert-warning">
+                {{errorMsg}}
+            </p>
+        </div>
+    </div>
+</div>
