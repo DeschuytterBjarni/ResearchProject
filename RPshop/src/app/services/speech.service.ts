@@ -25,6 +25,89 @@ export class SpeechService {
 
   init() {
     annyang.setLanguage('en-US');
+    const dutchCommands = {
+      'Ga naar :nav': (res: any) => {
+        this.zone.run(() => {
+          this.navigation$.next(res);
+          this.system$.next("Navigating to " + res + " page.");
+        });
+      },
+      'Voeg *item toe (aan winkelmand)': (res: any) => {
+        this.zone.run(() => {
+          console.log(res);
+          this.item$.next(res);
+          this.system$.next("Adding " + res + " to cart.");
+        });
+      },
+      'Scroll naar beneden': () => {
+        this.zone.run(() => {
+          this.string$.next('scroll down');
+          this.system$.next("Scrolling down.");
+        });
+      },
+      'Scroll naar boven': () => {
+        this.zone.run(() => {
+          this.string$.next('scroll up');
+          this.system$.next("Scrolling up.");
+        });
+      },
+      'Sorteer aflopend': (res: any) => {
+        this.zone.run(() => {
+          this.string$.next("descending");
+          this.system$.next("Sorting by " + res + ".");
+        });
+      },
+      'Sorteer oplopend': (res: any) => {
+        this.zone.run(() => {
+          this.string$.next("ascending");
+          this.system$.next("Sorting by " + res + ".");
+        });
+      },
+      // probleem met 10 items (wordt 'teen items')
+      'Toon :num items': (res: any) => {
+        this.zone.run(() => {
+          this.string$.next(res);
+          this.system$.next("Showing " + res + " items.");
+        });
+      },
+      'Verander (van) layout': () => {
+        this.zone.run(() => {
+          this.string$.next('change layout');
+          this.system$.next("Changing layout.");
+        });
+      },
+      // werkt niet altijd. categoriën worden in het engels opgehaald
+      'Toon categorie *cat': (res: any) => {
+        this.zone.run(() => {
+          this.category$.next(res);
+          this.system$.next("Showing category " + res + ".");
+        });
+      },
+      'Toon assistent': () => {
+        this.zone.run(() => {
+          this.string$.next('show assistant');
+          this.system$.next("Showing assistant.");
+        });
+      },
+      'Verberg assistent': () => {
+        this.zone.run(() => {
+          this.string$.next('hide assistant');
+          this.system$.next("Hiding assistant.");
+        });
+      },
+      'Verbergassistent': () => {
+        this.zone.run(() => {
+          this.string$.next('hide assistant');
+          this.system$.next("Hiding assistant.");
+        });
+      },
+      'Stop met luisteren': () => {
+        this.zone.run(() => {
+          this.string$.next('stop listening');
+          this.system$.next("Stopped listening.");
+        });
+      },
+    }
     const controlCommands = {
       'scroll down': () => {
         this.zone.run(() => {
@@ -159,6 +242,7 @@ export class SpeechService {
     annyang.addCommands(controlCommands);
     annyang.addCommands(navigationCommands);
     annyang.addCommands(cartCommands);
+    annyang.addCommands(dutchCommands);
 
     // Log anything the user says and what speech recognition thinks it might be
     // annyang.addCallback('result', (userSaid: any) => {
