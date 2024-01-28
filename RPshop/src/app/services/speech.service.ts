@@ -20,10 +20,14 @@ export class SpeechService {
   constructor(private zone: NgZone, private location: Location) { }
 
   get speechSupported(): boolean {
-    if (!('webkitSpeechRecognition' in window)) {
+    try {
+      if (!('webkitSpeechRecognition' in window)) {
+        return false;
+      }
+      return typeof annyang !== 'undefined';
+    } catch (e) {
       return false;
     }
-    return typeof annyang !== 'undefined';
   }
 
   init() {
