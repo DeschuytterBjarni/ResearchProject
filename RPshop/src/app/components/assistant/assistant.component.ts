@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { SpeechService } from '../../services/speech.service';
 import { TalkService } from '../../services/speech.service';
 import { Subscription } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-assistant',
@@ -19,7 +20,7 @@ export class AssistantComponent {
   pageSubscription: Subscription | undefined;
   href: string = '';
 
-  constructor(public speech: SpeechService, public talk: TalkService) { }
+  constructor(public speech: SpeechService, public talk: TalkService, private _snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.speech.init();
@@ -44,6 +45,7 @@ export class AssistantComponent {
       this.errorMsg = err.message;
       this.systemResultRecieved = true;
       this.systemResult.push({ 'type': 'error', 'message': err.message });
+      this._snackBar.open('Error: ' + err.message, 'Close', { duration: 3000, });
     } else {
       this.errorMsg = null;
     }
